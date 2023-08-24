@@ -1,2 +1,2 @@
 ## FORNAT
-#R code written for FORNAT AG
+R code written for FORNAT AG
