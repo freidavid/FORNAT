@@ -16,34 +16,34 @@ DatenbankAuswertung(input = NULL, output = NULL, combine = F, befischung = NULL,
 The path to input file in excel format, which in this case is the latest version of the fishdatabase.
 }
   \item{output}{
-%%     ~~Describe \code{output} here~~
+The path to store the output files.
 }
   \item{combine}{
-%%     ~~Describe \code{combine} here~~
+Default is FALSE. If combine is set to TRUE, all data of one project is combined.
 }
   \item{befischung}{
-%%     ~~Describe \code{befischung} here~~
+This is used to specify a specific Befischungs-ID to analyse. It also works with multiple IDs, e.g. c(12,25,938:940)
 }
   \item{project}{
-%%     ~~Describe \code{project} here~~
+Analyse all Befischungs-IDs of one project.
 }
   \item{durchgang}{
-%%     ~~Describe \code{durchgang} here~~
+Only analyse a certain durchgang, e.g. durchgang=c(1,2).
 }
   \item{species}{
-%%     ~~Describe \code{species} here~~
+Subset the analysis to a certain species.
 }
   \item{color}{
-%%     ~~Describe \code{color} here~~
+If set to TRUE (default), plots are in color, if set to FALSE, plots are black and white.
 }
   \item{analyze_all}{
-%%     ~~Describe \code{analyze_all} here~~
+If set to TRUE, the function analayzez the whole data base (Default is FALSE).
 }
   \item{fish_id}{
-%%     ~~Describe \code{fish_id} here~~
+IF set to TRUE, the points of the plots are labelled with the specific fish-IDs. Default is FALSE..
 }
   \item{cutoff}{
-%%     ~~Describe \code{cutoff} here~~
+Cutoff to detemine the 0 and 0+ categories. Default is 100, which corresponds to 100 mm.
 }
 }
 \details{
@@ -60,7 +60,7 @@ The path to input file in excel format, which in this case is the latest version
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+DFR
 }
 \note{
 %%  ~~further notes~~
@@ -72,10 +72,6 @@ The path to input file in excel format, which in this case is the latest version
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
 ## The function is currently defined as
 function (input = NULL, output = NULL, combine = F, befischung = NULL, 
     project = NULL, durchgang = NULL, species = NULL, color = T, 
