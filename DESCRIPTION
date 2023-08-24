@@ -1,12 +1,12 @@
 Package: RFORNAT
 Type: Package
-Title: What the package does (short line)
+Title: Package to analyze the FORNAT AG fish database
 Version: 1.0
 Date: 2023-08-24
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: DFR
+Maintainer: DFR <david.frei@fornat.ch>
+Description: Package can analyze one or more fishing events to calculate fisheries statistics
+License: None
 RoxygenNote: 7.1.2
 NeedsCompilation: no
 Packaged: 2023-08-24 13:41:19 UTC; david

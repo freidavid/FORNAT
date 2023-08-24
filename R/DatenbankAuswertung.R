@@ -1,5 +1,18 @@
 #' Function to evaluate FORNAT fish data base
 #'
+#' @param input The path to input file in excel format, which in this case is the latest version of the fishdatabase.
+#' @param output The path to store the output files.
+#' @param combine Default is FALSE. If combine is set to TRUE, all data of one project is combined.
+#' @param befischung This is used to specify a specific Befischungs-ID to analyse. It also works with multiple IDs, e.g. c(12,25,938:940)
+#' @param project Analyse all Befischungs-IDs of one project
+#' @param durchgang Only analyse a certain durchgang, e.g. durchgang=c(1,2)
+#' @param species Subset the analysis to a certain species
+#' @param color If set to TRUE (default), plots are in color, if set to FALSE, plots are black and white
+#' @param analyze_all If set to TRUE, the function analayzez the whole data base (Default is FALSE)
+#' @param fish_id IF set to TRUE, the points of the plots are labelled with the specific fish-IDs. Default is FALSE.
+#' @param cutoff Cutoff to detemine the 0 and 0+ categories. Default is 100, which corresponds to 100 mm
+#' 
+#' 
 #' @return data.frame() with results and plots
 #'
 #' @author David Frei, \email{david.frei@fornat.com}
