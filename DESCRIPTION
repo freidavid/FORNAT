@@ -7,3 +7,6 @@ Author: Who wrote it
 Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
+RoxygenNote: 7.1.2
+NeedsCompilation: no
+Packaged: 2023-08-24 13:41:19 UTC; david

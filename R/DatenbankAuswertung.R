@@ -1,3 +1,19 @@
+#' Function to evaluate FORNAT fish data base
+#'
+#' @return data.frame() with results and plots
+#'
+#' @author David Frei, \email{david.frei@fornat.com}
+#'
+#'
+#' @import readxl
+#' @import ggplot2
+#' @import RColorBrewer
+#' @import FSA
+#' @import xlsx
+#' @export
+#'
+
+
 DatenbankAuswertung <-
 function(input=NULL,output=NULL,combine=F,befischung=NULL,project=NULL,durchgang=NULL,species=NULL,color=T,analyze_all=F,fish_id=F,cutoff=100){
 ###############################################################################

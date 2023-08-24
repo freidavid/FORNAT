@@ -1,7 +1,7 @@
 \name{DatenbankAuswertung}
 \alias{DatenbankAuswertung}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
+\title{Datenbankauswertung
 %%  ~~function to do ... ~~
 }
 \description{
