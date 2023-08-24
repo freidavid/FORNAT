@@ -13,7 +13,7 @@ DatenbankAuswertung(input = NULL, output = NULL, combine = F, befischung = NULL,
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{input}{
-%%     ~~Describe \code{input} here~~
+The path to input file in excel format, which in this case is the latest version of the fishdatabase.
 }
   \item{output}{
 %%     ~~Describe \code{output} here~~
