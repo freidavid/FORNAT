@@ -6,11 +6,11 @@
 \packageTitle{RFORNAT}
 }
 \description{
-\packageDescription{RFORNAT is an R package to analyze the FORNAT fish database}
+\packageDescription{RFORNAT}
 }
 \details{
 
-\packageDESCRIPTION{RFORNAT is an R package to analyze the FORNAT fish database}
+\packageDESCRIPTION{RFORNAT}
 \packageIndices{RFORNAT}
 Currently, it contains the function DatenbankAuswertung()
 }
