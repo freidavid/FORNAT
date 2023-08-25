@@ -1,1 +1,6 @@
 export("DatenbankAuswertung")
+import(readxl)
+import(ggplot2)
+import(RColorBrewer)
+import(FSA)
+import(xlsx)
