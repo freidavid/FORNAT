@@ -10,7 +10,7 @@
 }
 \details{
 
-The DESCRIPTION file:
+
 \packageDESCRIPTION{RFORNAT}
 \packageIndices{RFORNAT}
 ~~ An overview of how to use the package, including the most important functions ~~
