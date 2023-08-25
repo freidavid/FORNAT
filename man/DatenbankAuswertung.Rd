@@ -74,6 +74,7 @@ David Frei
 \examples{
 ##To analyse Befischungs-IDs 1,938,939 and 940
 auswertung(befischung=c(1,938:940),input=in_file,output=output2)
+}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory (show via RShowDoc("KEYWORDS")):
 % \keyword{ ~kwd1 }

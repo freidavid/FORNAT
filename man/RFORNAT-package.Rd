@@ -6,29 +6,19 @@
 \packageTitle{RFORNAT}
 }
 \description{
-\packageDescription{RFORNAT}
+\packageDescription{RFORNAT is an R package to analyze the FORNAT fish database}
 }
 \details{
 
-The DESCRIPTION file:
-\packageDESCRIPTION{RFORNAT}
+\packageDESCRIPTION{RFORNAT is an R package to analyze the FORNAT fish database}
 \packageIndices{RFORNAT}
-~~ An overview of how to use the package, including the most important functions ~~
+Currently, it contains the function DatenbankAuswertung()
 }
 \author{
-\packageAuthor{RFORNAT}
+\packageAuthor{DFR}
 
-Maintainer: \packageMaintainer{RFORNAT}
-}
-\references{
-~~ Literature or other references for background information ~~
-}
-~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory ~~
-\keyword{ package }
-\seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
+Maintainer: \packageMaintainer{DFR}
 }
 \examples{
-~~ simple examples of the most important functions ~~
+DatenbankAuswertung(befischung=678,input=database.xlsx)
 }
