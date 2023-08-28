@@ -4,7 +4,8 @@ R code written for FORNAT AG to evaluate the fish data base.
 
 #### How to install:
 
-```library(devtools)
+```install.packages("devtools")
+library(devtools)
 install_github("freidavid/FORNAT")
 ```
 
