@@ -2,7 +2,7 @@
 
 R code written for FORNAT AG to evaluate the fish data base.
 
-#### How to install:
+#### How to install using the package "devtools" by [Wickham, Hester & Bryan (2022)](https://devtools.r-lib.org/):
 
 ```install.packages("devtools")
 library(devtools)
