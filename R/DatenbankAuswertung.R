@@ -12,7 +12,8 @@
 #' @param fish_id IF set to TRUE, the points of the plots are labelled with the specific fish-IDs. Default is FALSE.
 #' @param cutoff Cutoff to detemine the 0 and 0+ categories. Default is 100, which corresponds to 100 mm
 #' @param Format Output format for plots. Either 'pdf' (default) or 'jpeg'
-#' 
+#' @param titel Title that will be used for each plot'
+
 #' 
 #' @return data.frame() with results and plots
 #'
@@ -29,7 +30,8 @@
 
 
 
-DatenbankAuswertung <- function(input=NULL,output=NULL,combine=F,befischung=NULL,project=NULL,durchgang=NULL,species=NULL,color=T,analyze_all=F,fish_id=F,Format="pdf",cutoff=100){
+DatenbankAuswertung <-
+function(input=NULL,output=NULL,combine=F,befischung=NULL,project=NULL,durchgang=NULL,species=NULL,color=T,analyze_all=F,fish_id=F,Format="pdf",titel=NULL,cutoff=100){
 ###############################################################################
 #0 - check if all packages are installed, if not install them
 ###############################################################################
@@ -75,6 +77,7 @@ lapply(packages,require,character.only=T)
   if(Format != "pdf" && Format != "jpeg"){
   warning("Output format has to be either 'pdf' or 'jpeg', no plots are produced otherwise")
   }
+
 
 
   #B Load data
@@ -513,7 +516,11 @@ for (i in 1:length(befischung)){
     }
     
   if(color==F){colors<-gray.colors(nrow(plot_data),start=0,end=1)}
-
+  
+    
+  if(is.null(titel)){titel_text<-paste0(plot_data$projekt," - Fischarten")}
+  if(!is.null(titel)){titel_text<-titel}
+    
   #Plot Alexandre's barplot with species counts
   p<-ggplot(data=plot_data, aes(x=factor(datum), y=as.numeric(counts), fill=species)) +
     geom_bar(stat="identity", position=position_dodge(),color="black") +
@@ -523,14 +530,13 @@ for (i in 1:length(befischung)){
     theme(panel.grid = element_blank())+
     theme(panel.border = element_blank())+
     theme(axis.line = element_line(colour = "black", linewidth = 0.5))+
-    ggtitle(paste0(plot_data$projekt," - Fischarten"))+
+    ggtitle(titel_text)+
     ylab("Anzahl")+
     theme(plot.title = element_text(size = 16))+
     theme(axis.text=element_text(size=16),axis.title=element_text(size=16))+
     theme(legend.text = element_text(size = 16))+
     theme(legend.title = element_blank())+
     theme(legend.position = "right")+
-    theme(plot.title = element_text(hjust = 0.5))+
     theme(plot.title = element_text(face="bold"))+
     theme(axis.text = element_text(size = 16))+
     scale_y_continuous(expand=c(0,0),limits =  c(0,max(as.numeric(plot_data$counts))+2))+
@@ -580,9 +586,18 @@ if(Format=="pdf"){pdf(paste0(output,"/Laengenverteilung_ID_",unique(plot_data$Be
 
 
 for(j in 1:length(species_list)){
+  
+  
   single_species_data<-plot_data[which(plot_data$Fischart==species_list[j]),]
   if(Format=="jpeg"){jpeg(paste0(output,"/Laengenverteilung_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),"_",unique(single_species_data$Fischart),".jpeg"))}
-  hist(single_species_data$Laenge_mm,breaks=seq(0, (max(na.omit(single_species_data$Laenge_mm))+10),10),main=paste0(unique(single_species_data$Fischart)," - Laengenverteilung"),ylab="Anzahl",xlab="Laengenkategorie [mm]")
+  
+  if(is.null(titel)){titel_text<-paste0(unique(single_species_data$Fischart)," - Laengenverteilung")}
+  if(!is.null(titel)){titel_text<-titel}
+  
+  hist(single_species_data$Laenge_mm,breaks=seq(0, (max(na.omit(single_species_data$Laenge_mm))+10),10),main=titel_text,ylab="Anzahl",xlab="Laengenkategorie [mm]")
+  
+  
+  if(!is.null(titel)){mtext(text=unique(single_species_data$Fischart),side=3)}
   if(Format=="jpeg"){dev.off()}
 }
 
@@ -619,7 +634,14 @@ for(i in 1:length(befischung)){
       if(length(gewicht_2)>0){
         if(Format=="jpeg"){jpeg(paste0(output,"/Gewicht_Laengenverhaeltnis_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),"_",species_list[j],".jpeg"))}
 
-        plot(single_species_data$Laenge_mm,single_species_data$Gewicht_g,main=paste(species_list[j]),pch=19,col="darkblue",xlab="Laenge [mm]",ylab="Gewicht [g]")
+        
+        if(is.null(titel)){titel_text<-species_list[j]}
+        if(!is.null(titel)){titel_text<-titel}
+        
+        plot(single_species_data$Laenge_mm,single_species_data$Gewicht_g,main=titel_text,pch=19,col="darkblue",xlab="Laenge [mm]",ylab="Gewicht [g]")
+        
+        if(!is.null(titel)){mtext(text=species_list[j],side=3,line=0.25)}
+        
         if(fish_id==T){text(x=single_species_data$Laenge_mm,y=single_species_data$Gewicht_g,labels=single_species_data$Fisch_ID,cex=0.5,pos=1)}
         if(Format=="jpeg"){dev.off()
           
