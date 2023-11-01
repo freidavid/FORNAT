@@ -11,6 +11,7 @@
 #' @param analyze_all If set to TRUE, the function analayzez the whole data base (Default is FALSE)
 #' @param fish_id IF set to TRUE, the points of the plots are labelled with the specific fish-IDs. Default is FALSE.
 #' @param cutoff Cutoff to detemine the 0 and 0+ categories. Default is 100, which corresponds to 100 mm
+#' @param Format Output format for plots. Either 'pdf' or 'jpeg'.
 #' 
 #' 
 #' @return data.frame() with results and plots
@@ -27,8 +28,7 @@
 #'
 
 
-DatenbankAuswertung <-
-function(input=NULL,output=NULL,combine=F,befischung=NULL,project=NULL,durchgang=NULL,species=NULL,color=T,analyze_all=F,fish_id=F,Format="pdf",cutoff=100){
+DatenbankAuswertung <- function(input=NULL,output=NULL,combine=F,befischung=NULL,project=NULL,durchgang=NULL,species=NULL,color=T,analyze_all=F,fish_id=F,Format="pdf",cutoff=100){
 ###############################################################################
 #0 - check if all packages are installed, if not install them
 ###############################################################################
@@ -549,9 +549,8 @@ for (i in 1:length(befischung)){
   par(mar=c(5.1,4.5,4,1.5))
   print(p)
   #Alternative
-  par(mar=c(7,4.5,4,1.5))
-  help(par)
-  barplot(as.numeric(plot_data$counts),col=colors,names.arg=plot_data$species,main=paste0(unique(plot_data$projekt)," - ",unique(plot_data$datum)),ylab="Anzahl",las=2)
+  #par(mar=c(7,4.5,4,1.5))
+  #barplot(as.numeric(plot_data$counts),col=colors,names.arg=plot_data$species,main=paste0(unique(plot_data$projekt)," - ",unique(plot_data$datum)),ylab="Anzahl",las=2)
  dev.off()
 }}
 ###############################################################################
@@ -576,15 +575,16 @@ if(unique(is.na(project_data$datum))){project_data$datum<-"Kein_Datum"}
 
 species_list<-unique(plot_data$Fischart)
 if(Format=="pdf"){pdf(paste0(output,"/Laengenverteilung_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),".pdf"))}
-if(Format=="jpeg"){jpeg(paste0(output,"/Laengenverteilung_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),".jpeg"))}
 
 
 for(j in 1:length(species_list)){
+  if(Format=="jpeg"){jpeg(paste0(output,"/Laengenverteilung_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),"=",paste0(unique(single_species_data$Fischart),".jpeg"))}
   single_species_data<-plot_data[which(plot_data$Fischart==species_list[j]),]
   hist(single_species_data$Laenge_mm,breaks=seq(0, (max(na.omit(single_species_data$Laenge_mm))+10),10),main=paste0(unique(single_species_data$Fischart)," - Laengenverteilung"),ylab="Anzahl",xlab="Laengenkategorie [mm]")
+  if(Format=="jpeg"){dev.off()}
 }
 
-dev.off()
+if(Format=="pdf"){dev.off()}
 }}
 
 ###############################################################################
@@ -608,10 +608,11 @@ for(i in 1:length(befischung)){
     if(length(gewicht_1)>0){
       
     if(Format=="pdf"){pdf(paste0(output,"/Gewicht_Laengenverhaeltnis_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),".pdf"))}
-    if(Format=="jpeg"){jpeg(paste0(output,"/Gewicht_Laengenverhaeltnis_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),".jpeg"))}
       
     species_list<-unique(plot_data$Fischart)
     for(j in 1:length(species_list)){
+      if(Format=="jpeg"){jpeg(paste0(output,"/Gewicht_Laengenverhaeltnis_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),"_",unique(single_species_data$Fischart),".jpeg"))}
+      
       single_species_data<-plot_data[which(plot_data$Fischart==species_list[j]),]
       gewicht_2<-na.omit(single_species_data$Gewicht_g)
       if(length(gewicht_2)>0){
@@ -619,9 +620,10 @@ for(i in 1:length(befischung)){
         if(fish_id==T){
         text(x=single_species_data$Laenge_mm,y=single_species_data$Gewicht_g,labels=single_species_data$Fisch_ID,cex=0.5,pos=1)}
         }
+      if(Format=="jpeg"){dev.off()}
     }
     
-    dev.off()
+    if(Format=="pdf"){dev.off()}
     }
   }
 }
