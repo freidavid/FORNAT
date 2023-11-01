@@ -578,7 +578,7 @@ if(Format=="pdf"){pdf(paste0(output,"/Laengenverteilung_ID_",unique(plot_data$Be
 
 
 for(j in 1:length(species_list)){
-  if(Format=="jpeg"){jpeg(paste0(output,"/Laengenverteilung_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),"=",paste0(unique(single_species_data$Fischart),".jpeg"))}
+  if(Format=="jpeg"){jpeg(paste0(output,"/Laengenverteilung_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),"_",paste0(unique(single_species_data$Fischart),".jpeg"))}
   single_species_data<-plot_data[which(plot_data$Fischart==species_list[j]),]
   hist(single_species_data$Laenge_mm,breaks=seq(0, (max(na.omit(single_species_data$Laenge_mm))+10),10),main=paste0(unique(single_species_data$Fischart)," - Laengenverteilung"),ylab="Anzahl",xlab="Laengenkategorie [mm]")
   if(Format=="jpeg"){dev.off()}
