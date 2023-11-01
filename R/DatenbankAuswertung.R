@@ -28,7 +28,7 @@
 
 
 DatenbankAuswertung <-
-function(input=NULL,output=NULL,combine=F,befischung=NULL,project=NULL,durchgang=NULL,species=NULL,color=T,analyze_all=F,fish_id=F,cutoff=100){
+function(input=NULL,output=NULL,combine=F,befischung=NULL,project=NULL,durchgang=NULL,species=NULL,color=T,analyze_all=F,fish_id=F,Format="pdf",cutoff=100){
 ###############################################################################
 #0 - check if all packages are installed, if not install them
 ###############################################################################
@@ -70,7 +70,12 @@ lapply(packages,require,character.only=T)
   if(length(project)==0&&combine==T){
     stop("You cannot combine over a project without specifying a project id. Please specify a project!")
   }
-  
+
+  if(Format != "pdf" && Format != "jpg"){
+  warning("Output format has to be either 'pdf' or 'jpeg', no plots are produced otherwise")
+  }
+
+
   #B Load data
   data<-list()
   sheets<-excel_sheets(input)
@@ -532,9 +537,14 @@ for (i in 1:length(befischung)){
   
 
   if(combine==F){
-    pdf(paste0(output,"/Fischarten_ID_",unique(plot_data$befischungs_id),"_",unique(plot_data$projekt),"_",unique(plot_data$datum),".pdf"))
-    }else{pdf(paste0(output,"/Fischarten_",unique(plot_data$projekt),".pdf"))
     
+    if(Format=="pdf"){pdf(paste0(output,"/Fischarten_ID_",unique(plot_data$befischungs_id),"_",unique(plot_data$projekt),"_",unique(plot_data$datum),".pdf"))}
+    if(Format=="jpeg"){jpeg(paste0(output,"/Fischarten_ID_",unique(plot_data$befischungs_id),"_",unique(plot_data$projekt),"_",unique(plot_data$datum),".jpeg"))}
+    
+    }else{
+      
+      if(Format=="pdf"){pdf(paste0(output,"/Fischarten_",unique(plot_data$projekt),".pdf"))}
+      if(Format=="jpeg"){jpeg(paste0(output,"/Fischarten_",unique(plot_data$projekt),".jpeg"))}
   }
   par(mar=c(5.1,4.5,4,1.5))
   print(p)
@@ -565,7 +575,9 @@ if(unique(is.na(project_data$datum))){project_data$datum<-"Kein_Datum"}
 
 
 species_list<-unique(plot_data$Fischart)
-pdf(paste0(output,"/Laengenverteilung_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),".pdf"))
+if(Format=="pdf"){pdf(paste0(output,"/Laengenverteilung_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),".pdf"))}
+if(Format=="jpeg"){jpeg(paste0(output,"/Laengenverteilung_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),".jpeg"))}
+
 
 for(j in 1:length(species_list)){
   single_species_data<-plot_data[which(plot_data$Fischart==species_list[j]),]
@@ -595,7 +607,9 @@ for(i in 1:length(befischung)){
     
     if(length(gewicht_1)>0){
       
-    pdf(paste0(output,"/Gewicht_Laengenverhaeltnis_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),".pdf"))
+    if(Format=="pdf"){pdf(paste0(output,"/Gewicht_Laengenverhaeltnis_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),".pdf"))}
+    if(Format=="jpeg"){jpeg(paste0(output,"/Gewicht_Laengenverhaeltnis_ID_",unique(plot_data$Befischung_ID),"_",unique(project_data$projekt),"_",unique(project_data$datum),".jpeg"))}
+      
     species_list<-unique(plot_data$Fischart)
     for(j in 1:length(species_list)){
       single_species_data<-plot_data[which(plot_data$Fischart==species_list[j]),]
