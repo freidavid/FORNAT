@@ -3,16 +3,20 @@
 #' @param input The path to input file in excel format, which in this case is the latest version of the fishdatabase.
 #' @param output The path to store the output files.
 #' @param combine Default is FALSE. If combine is set to TRUE, all data of one project is combined.
-#' @param befischung This is used to specify a specific Befischungs-ID to analyse. It also works with multiple IDs, e.g. c(12,25,938:940)
-#' @param project Analyse all Befischungs-IDs of one project
-#' @param durchgang Only analyse a certain durchgang, e.g. durchgang=c(1,2)
-#' @param species Subset the analysis to a certain species
-#' @param color If set to TRUE (default), plots are in color, if set to FALSE, plots are black and white
-#' @param analyze_all If set to TRUE, the function analayzez the whole data base (Default is FALSE)
+#' @param befischung This is used to specify a specific Befischungs-ID to analyse. It also works with multiple IDs, e.g. c(12,25,938:940).
+#' @param project Analyse all Befischungs-IDs of one project.
+#' @param durchgang Only analyse a certain durchgang, e.g. durchgang=c(1,2).
+#' @param species Subset the analysis to a certain species.
+#' @param color If set to TRUE (default), plots are in color, if set to FALSE, plots are black and white.
+#' @param analyze_all If set to TRUE, the function analayzez the whole data base (Default is FALSE).
 #' @param fish_id IF set to TRUE, the points of the plots are labelled with the specific fish-IDs. Default is FALSE.
-#' @param cutoff Cutoff to detemine the 0 and 0+ categories. Default is 100, which corresponds to 100 mm
-#' @param Format Output format for plots. Either 'pdf' (default) or 'jpeg'
-#' @param titel Title that will be used for each plot'
+#' @param cutoff Cutoff to detemine the 0 and 0+ categories. Default is 100, which corresponds to 100 mm.
+#' @param Format Output format for plots. Either 'pdf' (default) or 'jpeg'.
+#' @param titel Title that will be used for each plot'.
+#' @param xlim Maximum for x-Axis in mm.
+#' @param xlim Maximum for y-Axis in mm.
+
+
 
 #' 
 #' @return data.frame() with results and plots
@@ -26,6 +30,7 @@
 #' @import FSA
 #' @import xlsx
 #' @export
+
 
 
 
@@ -94,7 +99,8 @@ lapply(packages,require,character.only=T)
   #workaround because of date format problem
   suppressMessages(suppressWarnings(befischungsdaten$Datum<-read_excel(input,sheet=which(sheets=="Befischung"),col_types = "date")$Datum))
   suppressMessages(suppressWarnings(biometriedaten$Durchgang<-read_excel(input,sheet=which(sheets=="Biometrie"),col_types = "text")$Durchgang))
-
+  suppressMessages(suppressWarnings(biometriedaten$Einzeln_Gruppe<-read_excel(input,sheet=which(sheets=="Biometrie"),col_types = "text")$Einzeln_Gruppe))
+  
   #replace special characters in species names. I don't know why, but there are two types of ü, both need to be replace
   biometriedaten$Fischart<-gsub("ü","ue",biometriedaten$Fischart)
   biometriedaten$Fischart<-gsub("ü","ue",biometriedaten$Fischart)
@@ -104,7 +110,7 @@ lapply(packages,require,character.only=T)
   biometriedaten$Fischart<-gsub("Ö","Oe",biometriedaten$Fischart)
   biometriedaten$Fischart<-gsub("Ü","Ue",biometriedaten$Fischart)
   
-  
+  unique(biometriedaten$Einzeln_Gruppe)
 
 ###############################################################################
 #2- Analyze data
@@ -610,6 +616,7 @@ for(i in 1:length(befischung)){
   
     plot_data<-bio[which(bio$Befischung_ID==befischung[i]),]
     plot_data<-plot_data[!is.na(plot_data$Laenge_mm),]
+    plot_data<-plot_data[which(plot_data$Einzeln_Gruppe=="E"),]
     gewicht_1<-na.omit(plot_data$Gewicht_g)
   if(length(plot_data$Befischung_ID)>0){    
     #only needed to label the output file:
@@ -643,9 +650,7 @@ for(i in 1:length(befischung)){
         if(!is.null(titel)){mtext(text=species_list[j],side=3,line=0.25)}
         
         if(fish_id==T){text(x=single_species_data$Laenge_mm,y=single_species_data$Gewicht_g,labels=single_species_data$Fisch_ID,cex=0.5,pos=1)}
-        if(Format=="jpeg"){dev.off()
-          
-          }
+        if(Format=="jpeg"){dev.off()}
       }
     }
     
