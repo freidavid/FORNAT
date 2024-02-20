@@ -46,6 +46,8 @@ add_to_geopackage<-function(geopackage,data,layer,crs=2506){
     
     #add to data with geometry to geopaackage
     st_write(insert,geopackage,layer = layer,append=T,driver="GPKG")
+    
   }
 }
+
 
