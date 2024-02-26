@@ -25,8 +25,6 @@
 
 
 
-
-
 add_to_geopackage<-function(geopackage,data,layer,crs=2506){
   
   #make geometry for the data frame
