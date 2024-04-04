@@ -1,5 +1,6 @@
 export("DatenbankAuswertung")
 export("add_to_geopackage")
+export("jagd_simulation")
 import(readxl)
 import(ggplot2)
 import(RColorBrewer)
