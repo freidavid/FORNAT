@@ -19,12 +19,25 @@
 #' @param alpha Transparence level of the lines in the population size plot. Defaults to 1.
 #' @param plot_start Plot age and sex distribution of starting population. Defaults to F.
 #' @param main Plot title for the population size over time plot.
+
+
+
+#' 
 #' @return list() with results and plots
+#'
 #' @author David Frei, \email{david.frei@fornat.com}
-#' @import 
+#'
+#'
+#' @import readxl
+#' @import ggplot2
+#' @import RColorBrewer
+#' @import FSA
+#' @import xlsx
 #' @export
 
-#########################################################################################################################################################
+
+
+########################################################################################################################################################
 jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs=0, imax=150, c=0.3, a=1, m=100, age_distribution=c(1), sex_ratio=c(0.5,0.5), max_age=10, alpha=1, plot_start=F,main="Populationsgrösse"){
   #########################################################################################################################################################
   
