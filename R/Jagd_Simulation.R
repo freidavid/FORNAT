@@ -14,7 +14,7 @@
 #' @param a Slope of carrying capacity curve. Defaults to 1. 
 #' @param m Number of individuals in the starting population.
 #' @param age_distribution Age distribution in the starting population, eg. c(0.2,0.4,0.4). Distributes all individuals over the given number of groups in the specificied proportions. Defaults to 1.
-#' @param sex_ration Sex ratio in the starting population. Defaults to c(0.5,0.5).
+#' @param sex_ration Sex ratio in of new birhts, in the format c(female,male). Defaults to c(0.5,0.5).
 #' @param max_age Maximum age in the starting population.
 #' @param alpha Transparence level of the lines in the population size plot. Defaults to 1.
 #' @param plot_start Plot age and sex distribution of starting population. Defaults to F.
@@ -82,6 +82,7 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
   
   #########################################################################################################################################################
   
+  
   # Funktion zur Fortpflanzung der Individuen
   reproduction <- function(population) {
     for (i in seq_along(population)) {
@@ -102,7 +103,7 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
         if (any(sapply(population, function(x) x$age >= 1))) {
           pr <- 0.30
           if (runif(1) < pr) {
-            sex <- sample(c("female", "male"), 1, prob = c(0.48, 0.52), replace = TRUE)
+            sex <- sample(c("female", "male"), 1, prob = sex_ratio, replace = TRUE)
             new_individual <- list(age = 0, sex = sex, reproducing = FALSE)
             population <- c(population, list(new_individual))
           }
@@ -111,7 +112,7 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
         if (any(sapply(population, function(x) x$age >= 1))) {
           pr <- 0.90
           if (runif(1) < pr) {
-            sex <- sample(c("female", "male"), 1, prob = c(0.48, 0.52), replace = TRUE)
+            sex <- sample(c("female", "male"), 1, prob = sex_ratio, replace = TRUE)
             new_individual <- list(age = 0, sex = sex, reproducing = FALSE)
             population <- c(population, list(new_individual))
           }
