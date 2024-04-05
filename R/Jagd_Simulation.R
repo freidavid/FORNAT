@@ -23,11 +23,12 @@
 #' @param max_repr Maximum age for reproduction.
 #' @param pr_1 Probability of reproduction in the first year of reproduction. Defaults to 0.3.
 #' @param pr_1_plus Probability of reproduction in all following years. Defaults to 0.9.
+#' @param pr_d_0 Probability of death in the first year. Default to 0.15.
 #' @param alpha Transparence level of the lines in the population size plot. Defaults to 1.
 #' @param plot_start Plot age and sex distribution of starting population. Defaults to F.
 #' @param main Plot title for the population size over time plot.
 
-
+ 
 
 #' 
 #' @return list() with results and plots
@@ -47,7 +48,7 @@
 
 
 #########################################################################################################################################################
-jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs=0, imax=150, c=0.3, a=1, m=100, age_distribution=c(1), pr_1=0.3, pr_1_plus=0.9, sex_ratio=c(0.5,0.5), average_offspring=1,min_offspring=1,max_offspring=1, min_repr=1, max_repr=12, max_age=16, alpha=1, plot_start=F, main="Populationsgrösse"){
+jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs=0, imax=150, c=0.3, a=1, m=100, age_distribution=c(1), pr_1=0.3, pr_1_plus=0.9, sex_ratio=c(0.5,0.5), average_offspring=1,min_offspring=1,max_offspring=1, min_repr=1, max_repr=12, max_age=16, pr_d_0 = 0.15 ,alpha=1, plot_start=F, main="Populationsgrösse"){
 #########################################################################################################################################################
   
   
@@ -158,12 +159,12 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
   #########################################################################################################################################################
   # Funktion zur Berechnung der Todesrate basierend auf Alter und Dichte (aktuelle Popgrösse / max. Popgrösse)
   
-  calculate_pi_d_with_capacity <- function(population, imax, c, a, max_age) {
+  calculate_pi_d_with_capacity <- function(population, imax, c, a, max_age, pr_d_0) {
     for (i in seq_along(population)) {
       age <- population[[i]]$age
       inow<-length(population)
       if (age == 0) {
-        pi_d <- 0.15
+        pi_d <- pr_d_0
       } else if (age < max_age) {
         pi_d <- 0.03 + (0.05/14 * (age - 1))
       } else {
@@ -257,7 +258,7 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
   #########################################################################################################################################################
   
   # Hauptalgorithmus für eine Generation, bzw. 1 Jahr
-  main_algorithm <- function(population, l, hch, hcs ,hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus, max_age, min_repr, max_repr) {
+  main_algorithm <- function(population, l, hch, hcs ,hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus, max_age, min_repr, max_repr, pr_d_0 ) {
     sample_space <- list()
     pop_size<-list()
     
@@ -266,7 +267,7 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
     # Schrittweise Ausführung der Algorithmen
     population <- update_age(population)
     population <- reproduction(population, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus, min_repr, max_repr)
-    population<-calculate_pi_d_with_capacity(population, imax, c, a, max_age)
+    population<-calculate_pi_d_with_capacity(population, imax, c, a, max_age, pr_d_0)
     population <- death_function(population, max_age)
     population <- hunting_function(population, l, hch, hcs, hyh, hys, hh, hs)
     
@@ -290,12 +291,12 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
     out<-list()
     populationsgroesse<-vector()
     
-    out[[1]]<-main_algorithm(starting_population, l, hch, hcs, hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus, max_age, min_repr, max_repr)
+    out[[1]]<-main_algorithm(starting_population, l, hch, hcs, hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus, max_age, min_repr, max_repr, pr_d_0 )
     populationsgroesse[1]<-unlist(out[[1]]$pop_size)
     
     for(j in 2:J){
       population<-out[[j-1]]$sample_space
-      out[[j]]<-main_algorithm(population, l, hch, hcs, hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus, max_age, min_repr, max_repr)
+      out[[j]]<-main_algorithm(population, l, hch, hcs, hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus, max_age, min_repr, max_repr, pr_d_0 )
     }
     resultate[[n]]<-out
   }
