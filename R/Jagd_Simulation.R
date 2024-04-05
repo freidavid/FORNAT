@@ -19,6 +19,8 @@
 #' @param min_offspring Minimum number of offspring per female. Defaults to 1. 
 #' @param max_offspring Maximum number of offspring per female. Defaults to 1. 
 #' @param max_age Maximum age in the starting population.
+#' @param pr_1 Probability of reproduction for 1-year old individuals. Defaults to 0.3.
+#' @param pr_1_plus Probability of reproduction individuals older than 1 year. Defaults to 0.9.
 #' @param alpha Transparence level of the lines in the population size plot. Defaults to 1.
 #' @param plot_start Plot age and sex distribution of starting population. Defaults to F.
 #' @param main Plot title for the population size over time plot.
@@ -39,9 +41,8 @@
 #' @export
 
 
-
 #########################################################################################################################################################
-jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs=0, imax=150, c=0.3, a=1, m=100, age_distribution=c(1), sex_ratio=c(0.5,0.5), average_offspring=1,min_offspring=1,max_offspring=1 ,max_age=10, alpha=1, plot_start=F, main="Populationsgrösse"){
+jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs=0, imax=150, c=0.3, a=1, m=100, age_distribution=c(1), pr_1=0.3, pr_1_plus=0.9, sex_ratio=c(0.5,0.5), average_offspring=1,min_offspring=1,max_offspring=1 ,max_age=10, alpha=1, plot_start=F, main="Populationsgrösse"){
   #########################################################################################################################################################
   
   
@@ -99,7 +100,7 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
   
   
   # Funktion zur Fortpflanzung der Individuen
-  reproduction <- function(population, sex_ratio, average_offspring, min_offspring, max_offspring) {
+  reproduction <- function(population, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus) {
     for (i in seq_along(population)) {
       age <- population[[i]]$age  # Zugriff auf das Attribut 'age' des Individuums
       sex <- population[[i]]$sex
@@ -116,7 +117,7 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
       
       if (age == 1 & reproducing == TRUE & sex == "female") {
         if (any(sapply(population, function(x) x$age >= 1))) {
-          pr <- 0.30
+          pr <- pr_1
           if (runif(1) < pr) {
             #sex <- sample(c("female", "male"), 1, prob = sex_ratio, replace = TRUE)
             #new_individual <- list(age = 0, sex = sex, reproducing = FALSE)
@@ -131,7 +132,7 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
         }
       } else if (1 < age & age < 12 & reproducing == TRUE & sex == "female") {
         if (any(sapply(population, function(x) x$age >= 1))) {
-          pr <- 0.90
+          pr <- pr_1_plus
           if (runif(1) < pr) {
             #sex <- sample(c("female", "male"), 1, prob = sex_ratio, replace = TRUE)
             #new_individual <- list(age = 0, sex = sex, reproducing = FALSE)
@@ -251,7 +252,7 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
   #########################################################################################################################################################
   
   # Hauptalgorithmus für eine Generation, bzw. 1 Jahr
-  main_algorithm <- function(population, l, hch, hcs ,hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring) {
+  main_algorithm <- function(population, l, hch, hcs ,hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus) {
     sample_space <- list()
     pop_size<-list()
     
@@ -259,7 +260,7 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
     
     # Schrittweise Ausführung der Algorithmen
     population <- update_age(population)
-    population <- reproduction(population, sex_ratio, average_offspring, min_offspring, max_offspring)
+    population <- reproduction(population, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus)
     population<-calculate_pi_d_with_capacity(population, imax, c, a)
     population <- death_function(population)
     population <- hunting_function(population, l, hch, hcs, hyh, hys, hh, hs)
@@ -284,12 +285,12 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
     out<-list()
     populationsgroesse<-vector()
     
-    out[[1]]<-main_algorithm(starting_population, l, hch, hcs, hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring)
+    out[[1]]<-main_algorithm(starting_population, l, hch, hcs, hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus)
     populationsgroesse[1]<-unlist(out[[1]]$pop_size)
     
     for(j in 2:J){
       population<-out[[j-1]]$sample_space
-      out[[j]]<-main_algorithm(population, l, hch, hcs, hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring)
+      out[[j]]<-main_algorithm(population, l, hch, hcs, hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus)
     }
     resultate[[n]]<-out
   }
@@ -358,3 +359,5 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
   
 }
 #########################################################################################################################################################
+
+
