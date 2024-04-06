@@ -23,10 +23,11 @@
 #' @param max_repr Maximum age for reproduction.
 #' @param pr_1 Probability of reproduction in the first year of reproduction. Defaults to 0.3.
 #' @param pr_1_plus Probability of reproduction in all following years. Defaults to 0.9.
-#' @param pr_d_0 Probability of death in the first year. Default to 0.15.
+#' @param pr_d_0 Probability of death in the first year. Defaults to 0.3
 #' @param alpha Transparence level of the lines in the population size plot. Defaults to 1.
 #' @param plot_start Plot age and sex distribution of starting population. Defaults to F.
 #' @param main Plot title for the population size over time plot.
+#' @param ylim Ylim for the population size plot. If ylim is not specified, ylim values are inferred from the data.
 
  
 
@@ -48,8 +49,8 @@
 
 
 #########################################################################################################################################################
-jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs=0, imax=150, c=0.3, a=1, m=100, age_distribution=c(1), pr_1=0.3, pr_1_plus=0.9, sex_ratio=c(0.5,0.5), average_offspring=1,min_offspring=1,max_offspring=1, min_repr=1, max_repr=12, max_age=16, pr_d_0 = 0.15 ,alpha=1, plot_start=F, main="Populationsgrösse"){
-#########################################################################################################################################################
+jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs=0, imax=150, c=0.3, a=1, m=100, age_distribution=c(1), pr_1=0.3, pr_1_plus=0.9, sex_ratio=c(0.5,0.5), average_offspring=1,min_offspring=1,max_offspring=1, min_repr=1, max_repr=12, max_age=16, pr_d_0 = 0.15 ,alpha=1, plot_start=F, ylim=NULL, main="Populationsgrösse"){
+  #########################################################################################################################################################
   
   
   # Generierung einer Startpopulation
@@ -336,7 +337,8 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
   
   
   alpha=alpha
-  plot(1:J,unlist(pop_size_lists[[1]]),ylim=c(min(unlist(pop_size_lists))*0.95,max(unlist(pop_size_lists))*1.05),type="l",ylab="Populationsgrösse",xlab="Anzahl Jahre",col=rgb(0, 0, 0, alpha = alpha),main=main)
+  if(length(ylim)==0){ylim=c(min(unlist(pop_size_lists))*0.95,max(unlist(pop_size_lists))*1.05)}
+  plot(1:J,unlist(pop_size_lists[[1]]),ylim=ylim,type="l",ylab="Populationsgrösse",xlab="Anzahl Jahre",col=rgb(0, 0, 0, alpha = alpha),main=main)
   
   
   if(s>1){
