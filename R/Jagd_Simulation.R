@@ -47,10 +47,9 @@
 
 
 
-
 #########################################################################################################################################################
 jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs=0, imax=150, c=0.3, a=1, m=100, age_distribution=c(1), pr_1=0.3, pr_1_plus=0.9, sex_ratio=c(0.5,0.5), average_offspring=1,min_offspring=1,max_offspring=1, min_repr=1, max_repr=12, max_age=16, pr_d_0 = 0.15 ,alpha=1, plot_start=F, ylim=NULL, main="Populationsgrösse"){
-  #########################################################################################################################################################
+#########################################################################################################################################################
   
   
   # Generierung einer Startpopulation
@@ -177,7 +176,8 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
       # Update pi_d with the increment
       updated_pi_d <- pi_d + increment
       # Store the updated pi_d in the individual
-      population[[i]] <- c(population[[i]], pi_d = updated_pi_d)
+      #population[[i]] <- c(population[[i]], pi_d = updated_pi_d)
+      population[[i]]$pi_d<-updated_pi_d
     }
     return(population)
   }
@@ -262,7 +262,6 @@ jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs
   main_algorithm <- function(population, l, hch, hcs ,hyh, hys, hh, hs, imax, c, a, sex_ratio, average_offspring, min_offspring, max_offspring, pr_1, pr_1_plus, max_age, min_repr, max_repr, pr_d_0 ) {
     sample_space <- list()
     pop_size<-list()
-    
     
     
     # Schrittweise Ausführung der Algorithmen
