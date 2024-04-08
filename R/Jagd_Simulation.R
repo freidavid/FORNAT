@@ -22,7 +22,7 @@
 #' @param min_repr Minimum age of reproduction.
 #' @param max_repr Maximum age for reproduction.
 #' @param pr_1 Probability of reproduction in the first year of reproduction. Defaults to 0.3.
-#' @param pr_1_plus Probability of reproduction in all following years. Defaults to 0.9.
+#' @param pr_1_plus Probability of reproduction in all following years. Defaults to 0.85.
 #' @param pr_d_0 Probability of death in the first year. Defaults to 0.3
 #' @param alpha Transparence level of the lines in the population size plot. Defaults to 1.
 #' @param plot_start Plot age and sex distribution of starting population. Defaults to F.
@@ -51,7 +51,7 @@
 
 
 #########################################################################################################################################################
-jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs=0, imax=150, c=0.3, a=1, m=100, age_distribution=c(1), pr_1=0.3, pr_1_plus=0.9, sex_ratio=c(0.5,0.5), average_offspring=1,min_offspring=1,max_offspring=1, min_repr=1, max_repr=12, max_age=16, pr_d_0 = 0.15 ,alpha=1, plot_start=F, ylim=NULL, main="Populationsgrösse"){
+jagd_simulation <- function(J=10, s=1, l=0, hch=0, hcs=0, hyh=0, hys=0, hh=0, hs=0, imax=150, c=0.3, a=1, m=100, age_distribution=c(1), pr_1=0.3, pr_1_plus=0.85, sex_ratio=c(0.5,0.5), average_offspring=1,min_offspring=1,max_offspring=1, min_repr=1, max_repr=12, max_age=16, pr_d_0 = 0.15 ,alpha=1, plot_start=F, ylim=NULL, main="Populationsgrösse"){
 #########################################################################################################################################################
   
   
