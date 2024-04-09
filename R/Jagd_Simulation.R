@@ -9,12 +9,12 @@
 #' @param hys Number of harvested young stags in each year. Defaults to 0.
 #' @param hh Number of harvested hinds in each year. Defaults to 0.
 #' @param hs Number of harvested stags in each year. Defaults to 0.
-#' @param imax Carrying capacity of the popoulation. Defaults to 150.
-#' @param c Maximum impact from carrying capacity. Defauults to 0.3.
+#' @param imax Carrying capacity of the population. Defaults to 150.
+#' @param c Maximum impact from carrying capacity. Defaults to 0.3.
 #' @param a Slope of carrying capacity curve. Defaults to 1. 
 #' @param m Number of individuals in the starting population.
 #' @param age_distribution Age distribution in the starting population, eg. c(0.2,0.4,0.4). Distributes all individuals over the given number of groups in the specificied proportions. Defaults to 1.
-#' @param sex_ratio Sex ratio in of new birhts, in the format c(female,male). Defaults to c(0.5,0.5).
+#' @param sex_ratio Sex ratio in of new births, in the format c(female,male). Defaults to c(0.5,0.5).
 #' @param average_offspring Average number of offspring per female. The number is drawn from a truncated poisson distribution for each birth event. Min and max can be specified separately. Defaults to 1. 
 #' @param min_offspring Minimum number of offspring per female. Defaults to 1. 
 #' @param max_offspring Maximum number of offspring per female. Defaults to 1. 
@@ -23,7 +23,7 @@
 #' @param max_repr Maximum age for reproduction.
 #' @param pr_1 Probability of reproduction in the first year of reproduction. Defaults to 0.3.
 #' @param pr_1_plus Probability of reproduction in all following years. Defaults to 0.85.
-#' @param pr_d_0 Probability of death in the first year. Defaults to 0.3
+#' @param pr_d_0 Probability of death in the first year. Defaults to 0.15
 #' @param alpha Transparence level of the lines in the population size plot. Defaults to 1.
 #' @param plot_start Plot age and sex distribution of starting population. Defaults to F.
 #' @param main Plot title for the population size over time plot.
