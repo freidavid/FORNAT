@@ -3,7 +3,7 @@
 #Data Analysis of CTDS data according to this tutorial by Eric Howe, Eric Rexstad and Len Thomas
 #https://examples.distancesampling.org/Distance-cameratraps/camera-distill.html
 ###############################################################################################
-#Distance need to be estimated beforehand, we used the approach by Haucke et al. :
+#Distances in each frame need to be estimated beforehand, we used the approach by Haucke et al. :
 #Haucke, T., Kühl, H. S., Hoyer, J., & Steinhage, V. (2022). Overcoming the distance estimation bottleneck in estimating animal abundance with camera traps. Ecological Informatics, 68, 101536. https://doi.org/10.1016/j.ecoinf.2021.101536
 #https://github.com/timmh/distance-estimation
 ###############################################################################################
